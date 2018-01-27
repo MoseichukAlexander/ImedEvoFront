@@ -16,33 +16,7 @@ export default combineReducers({
     password: '',
     rePassword: ''
   }),
-
-  regDoc: modelReducer('regDoc', {
-    username:'',
-    passwordDoc:'',
-    favoiriteColor:''
-  }),
-  RegDoc: formReducer('regDoc', {
-    username:'',
-    passwordDoc:'',
-    favoiriteColor:''
-  }),
-
-  regClinic: modelReducer('regClinic', {
-    clinicname:'',
-    clinicaddress:'',
-    clinicphone:'',
-    clinicemail:'',
-    clinicschedule:'',
-    cliniceservices:''
-  }),
-  regClinicForm: formReducer('regClinic', {
-    clinicname:'',
-    clinicaddress:'',
-    clinicphone:'',
-    clinicemail:'',
-    clinicschedule:'',
-    cliniceservices:''
-  })
-
+  searchResult:modelReducer('searchResult',{}),
+  modalName: modal,
+  router: routerReducer,
 });
