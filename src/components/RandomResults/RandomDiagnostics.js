@@ -32,11 +32,8 @@ class RandomDiagnostics extends Component {
   render () {
     console.log(this.state)
     return (
-      <div style={{display:'flex'}}>
-        <div style={{width:'50%', height:'700px', overflow:'scroll'}}>
-          <h4 style={{textAlign:'center'}} className={styles.title__random}>
-            <img src={require('../../images/Hospital Reception.png')} alt=''/>
-            Диагностика в Одессе:</h4>
+      <div className={styles.h_col2_container}>
+        <div className={styles.random_results}>
           <DiagnosticsList {...this.state}/>
         </div>
         <div className={styles.map}>
