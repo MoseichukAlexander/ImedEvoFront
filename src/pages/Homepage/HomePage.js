@@ -9,21 +9,26 @@ import DoctorsCategories from '../../components/DoctorsCatagories/DoctorsCategor
 import DoctorsCard from '../../components/DoctorsCard/DoctorsCard'
 
 
+
 class HomePage extends Component {
   render() {
     return (
-    <div>
-      <div className={styles.container__search}>
-        <Header/>
-        <SearchPanel/>
-      </div>
+      <div>
+        <div className={styles.container__search}>
+          <Header/>
+          <SearchPanel/>
+        </div>
 
-      <NavigationMenu/>
-      <DoctorsCategories/>
-      <DoctorsCard/>
-      <SliderComponent/>
-      <Footer/>
-    </div>
+        <NavigationMenu/>
+        <DoctorsCategories/>
+        <h2 style={{textAlign:'center'}}>Ваш доктор</h2>
+        <div style={{backgroundColor: '#eaedf2', marginTop: '36px', paddingBottom: '40px', marginBottom: '90px', paddingTop:'40px'}}>
+          <DoctorsCard/>
+        </div>
+
+        <SliderComponent/>
+        <Footer/>
+      </div>
     );
   }
 }

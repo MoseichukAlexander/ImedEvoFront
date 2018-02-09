@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
+import { Link } from 'react-router-dom'
 import styles from  './doctor-cards.scss'
 import * as constants from '../../constants/constants'
 import RatingStars from '../customComponents/RatingStars'
@@ -6,15 +7,13 @@ import RatingStars from '../customComponents/RatingStars'
 class DoctorsCard extends Component {
   render () {
     return (
-      <div style={{backgroundColor: '#e8e8e8', marginTop: '100px', paddingBottom: '40px', marginBottom: '90px'}}>
+      <Fragment>
         <div className="container">
-          <h2 className="title">ВАШ ДОКТОР:</h2>
-          <a className="categories-link" href="">Посмотреть всеx врачей</a>
           <div className={`container ${styles.widjet}`}>
             {constants.TestDoctorsCards.map((doctor, index) =>
               <article key={index} className={styles.widjet__doctor}>
                 <div className={styles.widjet__description}>
-                  <img src={require('../../images/doctor-photo.png')} alt=''/>
+                  <img src={doctor.image} alt=''/>
                   <p>
                     «Грамотный специалист, помогла справиться с атопическим дерматитом за 2 недели.
                     Прекрасно находит общий язык с детьми, даже с таким непоседой как наш Павлик...»
@@ -22,7 +21,7 @@ class DoctorsCard extends Component {
                 </div>
 
                 <div className={styles.widjet__rate}>
-                  <h3 className={styles.widjet__name}>Долгушина <p>Елена Игоревна</p></h3>
+                  <h3 className={styles.widjet__name}>{doctor.doctorLastName} <p>{doctor.doctorName}</p></h3>
                   <div className={styles.widjet__position}>
                     <span>Педиатр</span>
                     <RatingStars
@@ -94,7 +93,8 @@ class DoctorsCard extends Component {
             )}
           </div>
         </div>
-      </div>
+        <Link className={styles.link__all} to="/"> Посмотреть все специализации</Link>
+      </Fragment>
     )
   }
 }

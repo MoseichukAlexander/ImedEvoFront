@@ -1,22 +1,46 @@
-import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
+import { alert } from './alertReducer'
+import { reducer as form } from 'redux-form';
 import { modelReducer, formReducer } from 'react-redux-form';
-import modal from './ModalReducer';
+import authReducer from './authReducer';
 
-export default combineReducers({
-  loginUser: modelReducer('loginUser', { email: '', password: '' }),
-  loginUserForm: formReducer('loginUser', { email: '', password: '' }),
-  registrationUser: modelReducer('registrationUser', {
-    email: '',
-    password: '',
-    rePassword: ''
-  }),
+const rootReducer = combineReducers({
+  form,
+  auth: authReducer,
+  alert,
   registrationUserForm: formReducer('registrationUser', {
     email: '',
     password: '',
     rePassword: ''
   }),
-  searchResult:modelReducer('searchResult',{}),
-  modalName: modal,
-  router: routerReducer,
+
+  regDoc: modelReducer('regDoc', {
+    username:'',
+    passwordDoc:'',
+    favoiriteColor:''
+  }),
+  RegDoc: formReducer('regDoc', {
+    username:'',
+    passwordDoc:'',
+    favoiriteColor:''
+  }),
+
+  regClinic: modelReducer('regClinic', {
+    clinicname:'',
+    clinicaddress:'',
+    clinicphone:'',
+    clinicemail:'',
+    clinicschedule:'',
+    cliniceservices:''
+  }),
+  regClinicForm: formReducer('regClinic', {
+    clinicname:'',
+    clinicaddress:'',
+    clinicphone:'',
+    clinicemail:'',
+    clinicschedule:'',
+    cliniceservices:''
+  })
 });
+
+export default rootReducer;
