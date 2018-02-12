@@ -3,11 +3,10 @@ import * as Icons from '../SvgIcons/SvgIcons.js'
 import RatingStars from '../customComponents/RatingStars'
 import styles from  '../SearchResult/search-result.scss'
 import { Link } from 'react-router-dom'
+import AppointmentClinicModal from '../AppointmentForm/AppointmentClinicModal'
 
 export default ({ clinic, index }) => {
-  console.log(clinic.id)
   return (
-
     <article className={styles.clinic}>
 
       <div className={styles.clinic__info}>
@@ -37,7 +36,7 @@ export default ({ clinic, index }) => {
         </p>
         <div style={{display:'flex',justifyContent:'space-around',alignItems:'center'}}>
           <a href="/">Подробнее</a>
-          <button  className={styles.clinic__btn}>Записаться на прием</button>
+          <AppointmentClinicModal data={clinic}/>
         </div>
 
       </div>

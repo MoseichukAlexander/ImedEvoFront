@@ -24,7 +24,11 @@ import BlogArticlePage from '../../pages/BlogArticlePage/BlogArticlePage';
 import ForClinic from '../../pages/ForClinic/ForClinic';
 import HelpPage from '../../pages/HelpPage/HelpPage';
 import NotFound from '../../pages/NotFound/NotFound';
-
+import AboutUs from '../../pages/AboutUs/AboutUs';
+import Contacts from '../../pages/Contacts/Contacts';
+import Vacancy from '../../pages/Vacancy/Vacancy';
+import Promotion from '../../pages/Promotion/Promotion';
+import RequireAuth from '../../components/Authentication/Authentication';
 
 class App extends React.Component {
   constructor(props) {
@@ -54,13 +58,17 @@ class App extends React.Component {
                 <Route exact path="/signupdoctor" component={RegistrationDoctorPage} />
                 <Route exact path="/signupclinic" component={RegistrationClinicPage} />
                 <Route exact path="/searchresult" component={SearchResultPage} />
-                <Route exact path="/profile/:userID" component={UserProfilePage} />
+                <Route exact path="/profile/:userID" component={RequireAuth(UserProfilePage)}/>
                 <Route exact path="/blog" component={BlogArticlePage}/>
                 <Route exact path="/help" component={HelpPage}/>
                 <Route exact path="/forClinic" component={ForClinic}/>
                 <Route exact path="/forgot" component={ForgotPassword}/>
                 <Route exact path="/rules" component={ServiceRules}/>
                 <Route exact path="/privacy" component={PrivacyPolicy}/>
+                <Route exact path="/about" component={AboutUs}/>
+                <Route exact path="/contacts" component={Contacts}/>
+                <Route exact path="/vacancy" component={Vacancy}/>
+                <Route exact path="/promotion" component={Promotion}/>
                 <Route path="*" component={NotFound} />
                 </Switch>
               </div>
