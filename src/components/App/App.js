@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import ScrollToTop from '../../components/ScrollToTop/ScrollToTop'
 import { history } from '../../history';
 import { alertActions } from '../../actions/alertActions';
 //import { PrivateRoute } from '../PrivateRoute/PrivateRoute';
@@ -15,7 +15,7 @@ import RegistrationDoctorPage from '../../pages/RegistrationDoctorPage/Registrat
 import RegistrationClinicPage from '../../pages/RegistrationClinicPage/RegistrationClinicPage';
 import SearchResultPage from '../../pages/SearchResultPage/SearchResultPage';
 import UserProfilePage from '../../pages/UserProfilePage/UserProfilePage';
-import DoctorProfileCard from '../../components/DoctorProfileCard/DoctorProfileCard';
+import DoctorProfile from '../../components/DoctorProfileCard/DoctorProfile';
 import ForgotPassword from '../../components/ForgotPassword/ForgotPassword';
 import ClinicProfile from '../../components/ClinicCard/ClinicProfile';
 import PrivacyPolicy from '../../pages/PrivacyPolicy/PrivacyPolicy';
@@ -28,6 +28,7 @@ import AboutUs from '../../pages/AboutUs/AboutUs';
 import Contacts from '../../pages/Contacts/Contacts';
 import Vacancy from '../../pages/Vacancy/Vacancy';
 import Promotion from '../../pages/Promotion/Promotion';
+import SpecialtySearchResultPage from '../../pages/SpecialtySearchResult/SpecialtySearchResult';
 import RequireAuth from '../../components/Authentication/Authentication';
 
 class App extends React.Component {
@@ -45,19 +46,21 @@ class App extends React.Component {
             <div className={`alert ${alert.type}`}>{alert.message}</div>
             }
             <Router history={history}>
+              <ScrollToTop>
               <div>
                 <Switch>
                 <Route exact path="/" component={HomePage} />
                 <Route exact path="/doctors" component={DoctorsPage} />
                 <Route exact path="/clinics" component={ClinicsPage} />
                 <Route exact path="/clinics/:clinicId" component={ClinicProfile} />
-                <Route exact path="/doctors/:doctorId" component={DoctorProfileCard} />
+                <Route exact path="/doctors/:doctorId" component={DoctorProfile} />
                 <Route exact path="/laboratories" component={LaboratoriesPage} />
                 <Route exact path="/diagnostics" component={DiagnosticsPage} />
                 <Route exact path="/sale" component={SalePage} />
                 <Route exact path="/signupdoctor" component={RegistrationDoctorPage} />
                 <Route exact path="/signupclinic" component={RegistrationClinicPage} />
                 <Route exact path="/searchresult" component={SearchResultPage} />
+                <Route exact path="/searchresult/:doctorSpecialty" component={SpecialtySearchResultPage} />
                 <Route exact path="/profile/:userID" component={RequireAuth(UserProfilePage)}/>
                 <Route exact path="/blog" component={BlogArticlePage}/>
                 <Route exact path="/help" component={HelpPage}/>
@@ -72,6 +75,7 @@ class App extends React.Component {
                 <Route path="*" component={NotFound} />
                 </Switch>
               </div>
+              </ScrollToTop>
             </Router>
           </div>
         </div>
