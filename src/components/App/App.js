@@ -30,6 +30,11 @@ import Vacancy from '../../pages/Vacancy/Vacancy';
 import Promotion from '../../pages/Promotion/Promotion';
 import SpecialtySearchResultPage from '../../pages/SpecialtySearchResult/SpecialtySearchResult';
 import RequireAuth from '../../components/Authentication/Authentication';
+import ChangePassword from '../../components/ChangePassword/ChangePassword';
+import * as actions from 'actions/checkUserAuth';
+
+const token = localStorage.getItem('id_token');
+
 
 class App extends React.Component {
   constructor(props) {
@@ -37,7 +42,16 @@ class App extends React.Component {
     history.listen((location, action) => {});
   }
 
+
+
   render() {
+    if (token) {
+      const id = localStorage.getItem('id_user');
+      console.log('token successful')
+       this.props.getUser(token, id);
+      // store.dispatch({ type: AUTH_USER });
+    }
+
     const { alert } = this.props;
     return (
         <div>
@@ -72,7 +86,9 @@ class App extends React.Component {
                 <Route exact path="/contacts" component={Contacts}/>
                 <Route exact path="/vacancy" component={Vacancy}/>
                 <Route exact path="/promotion" component={Promotion}/>
+                <Route path="/forgot/resetpassword:token" component={ChangePassword}/>
                 <Route path="*" component={NotFound} />
+
                 </Switch>
               </div>
               </ScrollToTop>
@@ -90,5 +106,6 @@ function mapStateToProps(state) {
   };
 }
 
-const connectedApp = connect(mapStateToProps)(App);
+
+const connectedApp = connect(mapStateToProps,actions)(App);
 export { connectedApp as App };

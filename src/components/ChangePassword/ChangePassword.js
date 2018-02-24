@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react'
+import Header from '../Header/Header'
 import { connect } from 'react-redux'
+import Footer from '../Footer/Footer'
 import { reduxForm, Field, Form } from 'redux-form'
-import * as actions from  '../../actions/loginActions'
-import { Link } from 'react-router-dom'
 import styles from  '../SignUpModal/sign-up-modal.scss'
 
 const renderInput = (field) => {
@@ -20,21 +20,18 @@ const renderInput = (field) => {
   )
 }
 
-class SignInForm extends Component {
-  constructor (props) {
-    super(props)
-  }
+class ChangePassword extends Component {
 
-  handleFormSubmit ({username, password}) {
-    this.props.signinUser({username, password})
+  componentDidMount(){
+    let token =  this.props.match.params.token;
+    console.log(token)
   }
 
   renderAlert () {
-    const {errorMessage} = this.props
-    if (errorMessage) {
+    if (this.props.errorMessage) {
       return (
         <div className="alert alert-danger">
-          <strong>Oops!</strong>{errorMessage}
+          <strong>Что-то пошло не так</strong> {this.props.errorMessage}
         </div>
       )
     }
@@ -44,25 +41,26 @@ class SignInForm extends Component {
     const {handleSubmit} = this.props
     return (
       <Fragment>
-        <section className={styles.signup}>
-          <Form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+        <Header/>
+        <section className={styles.recover_password}>
+          <Form>
             <Field
-              name="username"
-              type="email"
+              name="newPassword"
+              type="password"
               component={renderInput}
-              label="Email"/>
+              label="Новый пароль"/>
 
             <Field
               name="password"
               type="password"
               component={renderInput}
-              label="Пароль"/>
+              label="Подтвердите пароль"/>
 
             {this.renderAlert()}
-            <button action="submit" className={styles.signin}>Войти</button>
+            <button action="submit" className={styles.signin}>Изменить пароль</button>
           </Form>
-          <Link  to="/forgot">Забыли пароль?</Link>
         </section>
+        <Footer/>
       </Fragment>
     )
   }
@@ -74,5 +72,6 @@ function mapStateToProps (state) {
   }
 }
 
-const form = reduxForm({form: 'signin'})
-export default connect(mapStateToProps, actions)(form(SignInForm))
+const form = reduxForm({form: 'recover_password'})
+export default connect(mapStateToProps)(form(ChangePassword))
+
