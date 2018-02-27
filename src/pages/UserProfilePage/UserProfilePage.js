@@ -12,6 +12,7 @@ import ProfileData from './ProfileData'
 import * as Icons from '../../components/SvgIcons/SvgIcons.js'
 import * as  constants  from '../../constants/constants'
 import stylesModal from  '../../components/SignUpModal/sign-up-modal.scss'
+import * as actions from '../../actions/appointmentsGetAllUser'
 
 class UserProfilePage extends Component {
 
@@ -23,22 +24,39 @@ class UserProfilePage extends Component {
     this.openModal = this.openModal.bind(this)
   }
 
+  componentDidMount (){
+    this.props.getAppoinmentsUser()
+  }
+
   closeModal () {
     this.setState({
       isModalOpen: false
     })
-    document.body.classList.remove(constants.MODAL_OPEN_CLASS);
+    document.body.classList.remove(constants.MODAL_OPEN_CLASS)
   }
 
   openModal () {
     this.setState({
       isModalOpen: true,
     })
-    document.body.classList.add(constants.MODAL_OPEN_CLASS);
+    document.body.classList.add(constants.MODAL_OPEN_CLASS)
+  }
+
+  renderAlert () {
+    const {message} = this.props
+    if (message) {
+      return (
+        <div className="alert alert-danger">
+          <strong className={styles.message}>{message}</strong>
+        </div>
+      )
+    }
   }
 
   render () {
     const user = this.props.user
+    const message = this.props.message
+    const events = this.props.events
     return (
       <Fragment>
         <div className={styles.h_background}>
@@ -49,8 +67,10 @@ class UserProfilePage extends Component {
             <img width="100%" style={{borderRadius: 3}} src={require('../../images/sign-up.png')} alt="unsplash"/>
 
             <h2 className={styles.settings__title}> Настройки профиля</h2>
-            <SettingsForm user={user}/>
 
+            {message === '' && <SettingsForm user={user}/>}
+
+            {message !== '' && this.renderAlert()}
             <button
               className={stylesModal.close}
               onClick={this.closeModal}>
@@ -76,14 +96,13 @@ class UserProfilePage extends Component {
 
               <section className={styles.clinic}>
                 <h2 className={styles.clinic__title}>Текущие записи</h2>
-                <CalendarComponent/>
+                <CalendarComponent {...this.props}/>
               </section>
 
               <section className={styles.clinic}>
                 <section className={styles.clinic__feedback}>
-                  <h2 className={styles.clinic__title}>Отзывы</h2>
+                  <h2 className={styles.clinic__title}>Здесь будут Ваши отзывы</h2>
                   <div className={styles.feedback}>
-                    <h2>Здесь буду Ваши отзывы</h2>
                   </div>
                 </section>
               </section>
@@ -110,8 +129,16 @@ class UserProfilePage extends Component {
 function mapStateToProps (state) {
   return {
     authenticated: state.auth.authenticated,
-    user: state.auth.user
+    user: state.auth.user,
+    message: state.auth.message,
+    events:state.events.events
   }
 }
-export default connect(mapStateToProps)(UserProfilePage)
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getAppoinmentsUser: () => dispatch(actions.getAppoinmentsUser()),
+  };
+}
+export default connect(mapStateToProps,mapDispatchToProps)(UserProfilePage)
 

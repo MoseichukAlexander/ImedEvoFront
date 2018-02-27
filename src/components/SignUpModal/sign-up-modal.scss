@@ -1,3 +1,6 @@
+:global {
+  @import "../../calendar-styles.scss";
+}
 .registration {
   &__body {
     display: flex;
@@ -183,6 +186,13 @@
   @media (max-width: 400px) {
     margin-left: 0px;
   }
+
+  &__message{
+    background-color: #ff8533;
+    margin-top: 15px;
+    font-size: 18px;
+    padding: 10px;
+  }
 }
 
 .close {
@@ -312,6 +322,8 @@
   transform-style: flat;
   transition: color 400ms ease-out;
   border: 1px solid #ff8533;
+  cursor: pointer;
+
   &:hover {
     background-color: #ebedf3;
   }
@@ -350,4 +362,14 @@
     font-weight: 700;
     padding-left: 10px;
   }
+}
+
+.message{
+  text-align: center;
+  color: #4775d1;
+  font-size: 30px;
+  margin-top: 45px;
+  display: block;
+  margin-bottom: 20px;
+  padding: 130px;
 }
