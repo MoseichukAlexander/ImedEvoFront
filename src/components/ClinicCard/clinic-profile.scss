@@ -321,21 +321,6 @@
 
 .work_place {
   width: 60%;
-  .appointment__table {
-    margin-top: 40px;
-    width: 100%;
-    color: #ffffff;
-    font-size: 1.2em;
-    tr {
-      background-color: #4775d1;
-    }
-    th {
-      background-color: #ff8533;
-    }
-    tr {
-      border: 1px solid black;
-    }
-  }
 }
 
 .doctor__map {
@@ -387,3 +372,26 @@
       color: #ffffff;
   }
 }
+
+.message{
+  text-align: center;
+  color: #4775d1;
+  font-size: 24px;
+  margin-top: 45px;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.appointment__table{
+  width: 100%;
+  margin-bottom: 30px;
+  th{
+    background-color: #ff8533;
+  }
+
+  td{
+    background-color: #4775d1;
+    color: #ffffff;
+  }
+}
+

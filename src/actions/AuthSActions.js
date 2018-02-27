@@ -5,10 +5,11 @@ import {
   AUTH_ERROR,
 } from '../constants/constants'
 import * as constants from '../constants/constants'
+import * as helpers from '../helpers/helpers'
 
 export function signupUser ({password, username, lastName, firstName, birthDate, phone}) {
   return (dispatch) => {
-    axios.post(`${constants.TEST_ROOT_URL}/users/registration`, {
+    axios.post(`${constants.ROOT_URL}/users/registration`, {
       password,
       username,
       lastName,
@@ -17,15 +18,18 @@ export function signupUser ({password, username, lastName, firstName, birthDate,
       phone
     })
       .then(response => {
-        console.log(response)
-        console.log(response.data.status.code)
         if (response.data.status.code === 700) {
           dispatch(authSuccess(response.data.user))
           document.body.classList.remove(constants.MODAL_OPEN_CLASS)
+          helpers.setId(response.data.user.id)
           history.push(`/profile/${response.data.user.id}`)
         }
         else if (response.data.status.code === 708) {
           dispatch(authError('Дата Рождения введена не верно'))
+        }
+
+        else if (response.data.status.code === 705) {
+          dispatch(authError('Не заполнен номер телефона'))
         }
 
         else if (response.data.status.code === 702) {

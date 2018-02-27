@@ -6,23 +6,22 @@ import axios from 'axios'
 export function signinUser ({username, password}) {
   return function (dispatch) {
 
-    axios.post(`${constants.TEST_ROOT_URL}/login`, {username, password})
+    axios.post(`${constants.ROOT_URL}/login`, {username, password})
       .then(response => {
-        let jsonDataToken = response.data.split(': ')[1].split(',')[0]
-        let jsonDataId = response.data.split('=')[1].split(',')[0]
+        let jsonDataToken = response.data.response.token.split(' ')[1]
+        let jsonDataId = response.data.response.user.id
         helpers.setToken(jsonDataToken)
         helpers.setId(jsonDataId)
         return jsonDataId
       })
       .then((jsonDataId) => {
-        console.log(jsonDataId)
         let token = helpers.getToken()
         axios.get(`${constants.ROOT_URL}/users/${jsonDataId}`,
           {
             headers: {Authorization: 'Bearer ' + token}
           })
           .then(response => {
-            console.log(response)
+
             document.body.classList.remove(constants.MODAL_OPEN_CLASS)
             if (response.status === 200) {
               dispatch(authSuccess(response.data))

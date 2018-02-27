@@ -1,68 +1,146 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react'
 import moment from 'moment'
 import BigCalendar from 'react-big-calendar'
 import styles from './profile-data.scss'
+import * as Icons from '../../components/SvgIcons/SvgIcons.js'
 import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css'
 BigCalendar.momentLocalizer(moment)
+import { Tooltip } from 'react-lightweight-tooltip'
 
 class CalendarComponent extends Component {
-  constructor() {
-    super();
+  constructor () {
+    super()
     this.state = {
       width: window.innerWidth,
-    };
-  }
-  componentWillMount() {
-    window.addEventListener('resize', this.handleWindowSizeChange);
+      events: [],
+      appointments: []
+    }
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowSizeChange);
+  componentWillMount () {
+    window.addEventListener('resize', this.handleWindowSizeChange)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.handleWindowSizeChange)
   }
 
   handleWindowSizeChange = () => {
-    this.setState({ width: window.innerWidth });
-  };
-  render() {
-    const events =[];
-    const { width } = this.state;
-    const isMobile = width <= 789;
-    const calendarHide = width <= 400;
-    let today = new Date();
-    let lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
-    if(!calendarHide){
+    this.setState({width: window.innerWidth})
+  }
+
+  render () {
+    const tooltipRoundedStyle = {
+      content: {
+        backgroundColor: '#fff',
+        color: '#000',
+
+      },
+      tooltip: {
+        backgroundColor: '#fff',
+        borderRadius: '10px',
+        border: '1px solid #4775d1'
+      },
+      arrow: {
+        borderTop: 'solid #4775d1 5px',
+      },
+    }
+    const events = this.props.events
+    const {width} = this.state
+    const isMobile = width <= 789
+    const calendarHide = width <= 400
+    let today = new Date()
+    if (!calendarHide) {
       if (isMobile) {
         return (
           <section className={styles.appointment}>
-            <h3> У Вас еще нет текущих записей</h3>
-          </section>
+            {events.length > 0 &&
+            <table className={styles.appointments__table}>
+              <tbody>
+              <tr>
+                <th>Дата</th>
+                <th>Время</th>
+                <th>Подтверждение</th>
+              </tr>
+              {events.map((event, index) =>
+                <tr key={index}>
+                  <td>{event.date}</td>
+                  <td>{event.time}</td>
+                  <td>
+                    {event.approved &&
+                    <Icons.IconProve/>
+                    }
 
-        );
-      }  else {
+                    {!event.approved &&
+                    <Tooltip styles={tooltipRoundedStyle} content="Запись еще не подтверждена специалистом">
+                      <Icons.IconNotProve/>
+                    </Tooltip>
+
+                    }
+                  </td>
+                </tr>
+              )}
+              </tbody>
+
+            </table>
+            }
+
+            {events.length === 0 &&
+            <h3> У Вас еще нет текущих записей</h3>
+            }
+          </section>
+        )
+      } else {
         return (
-          <BigCalendar
-            style={{height: '600px',borderColor:'blue'}}
-            events={events}
-            messages={{
-              next:"Следующий",
-              previous:"Предыдущий",
-              today:"Сегодня",
-              month:'месяц',
-              week:'неделя',
-              day:'день',
-              agenda:'расписание'
-            }}
-          />
-        );
+          <section className={styles.appoinments}>
+            <BigCalendar
+              style={{height: '600px', borderColor: 'blue'}}
+              events={events}
+              messages={{
+                next: 'Следующий',
+                previous: 'Предыдущий',
+                today: 'Сегодня',
+                month: 'месяц',
+                week: 'неделя',
+                day: 'день',
+                agenda: 'расписание'
+              }}
+            />
+
+            {events.length > 0 &&
+            <table className={styles.appointments__table}>
+              <tbody>
+              <tr>
+                <th>Дата</th>
+                <th>Время</th>
+                <th>Подтверждение</th>
+              </tr>
+              {events.map((event, index) =>
+                <tr key={index}>
+                  <td>{event.date}</td>
+                  <td>{event.time}</td>
+                  <td>
+                    {event.approved &&
+                    <Icons.IconProve/>
+                    }
+
+                    {!event.approved &&
+                    <Tooltip styles={tooltipRoundedStyle} content="Запись еще не подтверждена специалистом">
+                      <Icons.IconNotProve/>
+                    </Tooltip>
+                    }
+                  </td>
+                </tr>
+              )}
+              </tbody>
+
+            </table>
+            }
+          </section>
+        )
       }
-    } else{
-      return (
-        <section className={styles.appointment}>
-          <h3> У Вас еще нет текущих записей</h3>
-        </section>
-      )
     }
   }
 }
 
-export default CalendarComponent;
+export default CalendarComponent
